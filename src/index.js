@@ -1,3 +1,5 @@
+// Copyright (C) 2016 Goom Inc. All rights reserved.
+
 import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';

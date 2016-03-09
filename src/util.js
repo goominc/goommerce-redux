@@ -1,3 +1,5 @@
+// Copyright (C) 2016 Goom Inc. All rights reserved.
+
 const _ = require('lodash');
 
 export function createFetchAction(options) {

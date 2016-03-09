@@ -1,4 +1,6 @@
-import createFetchAction from './util';
+// Copyright (C) 2016 Goom Inc. All rights reserved.
+
+import { createFetchAction } from './util';
 import { authApi } from 'goommerce-api-client';
 
 export default function auth(state = {}, action) {
@@ -36,6 +38,14 @@ export function signup(params) {
   return createFetchAction({
     type: 'SIGNUP',
     api: authApi.signup,
+    params,
+  });
+}
+
+export function forgotPassword(params) {
+  return createFetchAction({
+    type: 'FORGOT_PASSWORD',
+    api: authApi.forgotPassword,
     params,
   });
 }
