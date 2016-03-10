@@ -1,34 +1,24 @@
 // Copyright (C) 2016 Goom Inc. All rights reserved.
 
-const _ = require('lodash');
-
 export function createFetchAction(options) {
-  const {
-    type,
-    api,
-    params,
-    transform,
-  } = options;
-  const { request, success = {}, failure = {} } = options;
-  return (dispatch, getState) => {
+  const { type, api, params, transform, key } = options;
+  const action = (dispatch, getState) => {
     const state = getState();
-    function resolve(obj) {
-      return typeof obj === 'function' ? obj(state) : obj;
-    }
-
-    if (request) dispatch({ type, ...request });
-
     return api(state.auth, params).then((data) => {
-      dispatch(_.merge({
+      dispatch({
         type,
+        key,
         payload: transform ? transform({ data, state }) : data,
-      }, resolve(success)));
+      });
       return data;
     }, (error) => {
-      dispatch(_.merge({
+      dispatch({
         type,
+        key,
         error,
-      }, resolve(failure)));
+      });
     });
   };
+  action.key = key;
+  return action;
 }

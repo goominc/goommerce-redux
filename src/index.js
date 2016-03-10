@@ -5,11 +5,13 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import auth, * as authActions from './auth';
+import order, * as orderActions from './order';
 
 const _ = require('lodash');
 
 export {
   authActions,
+  orderActions,
 };
 
 export default function configureStore(customReducers, initialState) {
@@ -25,6 +27,7 @@ export default function configureStore(customReducers, initialState) {
 
   const rootReducer = combineReducers(_.defaults({}, customReducers, {
     auth,
+    order,
   }));
 
   const reducer = (state = {}, action) => {
