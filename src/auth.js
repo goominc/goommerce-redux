@@ -16,21 +16,23 @@ export default function auth(state = {}, action) {
   return state;
 }
 
-export function login(email, password) {
+export function login(email, password, onesignal) {
   return createFetchAction({
     type: 'LOGIN',
     api: authApi.login,
     params: {
       email,
       password,
+      onesignal,
     },
   });
 }
 
-export function logout() {
+export function logout(onesignal) {
   return createFetchAction({
     type: 'LOGOUT',
     api: authApi.logout,
+    params: { onesignal },
   });
 }
 
