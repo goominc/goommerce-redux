@@ -10,7 +10,7 @@ export default function auth(state = {}, action) {
   if (action.type === 'LOGOUT') {
     return {};
   }
-  if (['LOGIN', 'SIGNUP', 'RESET_PASSWORD'].indexOf(action.type) !== -1) {
+  if (['LOGIN', 'WHOAMI', 'SIGNUP', 'RESET_PASSWORD'].indexOf(action.type) !== -1) {
     return _.merge({}, state, action.payload);
   }
   return state;
@@ -25,6 +25,13 @@ export function login(email, password, onesignal) {
       password,
       onesignal,
     },
+  });
+}
+
+export function whoami() {
+  return createFetchAction({
+    type: 'WHOAMI',
+    api: authApi.whoami,
   });
 }
 
