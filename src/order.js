@@ -10,7 +10,8 @@ export default function order(state = {}, action) {
     return state;
   }
   if (action.type === 'BRAND_ORDER_STATS' ||
-      action.type === 'BRAND_ORDERS') {
+      action.type === 'BRAND_ORDERS' ||
+      action.type === 'BRAND_PENDING_ORDERS') {
     return _.assign({}, state, { [action.key]: action.payload });
   }
   return state;
@@ -31,5 +32,14 @@ export function loadBrandOrders(brandId, date) {
     api: orderApi.loadBrandOrders,
     params: { brandId, start: date, end: date },
     key: `brands.${brandId}.orders.${date}`,
+  });
+}
+
+export function loadBrandPendingOrders(brandId) {
+  return createFetchAction({
+    type: 'BRAND_PENDING_ORDERS',
+    api: orderApi.loadBrandPendingOrders,
+    params: { brandId },
+    key: `brands.${brandId}.pendingOrders`,
   });
 }
