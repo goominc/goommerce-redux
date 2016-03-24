@@ -14,6 +14,12 @@ export default function order(state = {}, action) {
       action.type === 'BRAND_PENDING_ORDERS') {
     return _.assign({}, state, { [action.key]: action.payload });
   }
+  if (action.type === 'REMOVE_BRAND_PENDING_ORDER') {
+    const { brandId, orderProductId } = action.payload;
+    const key = `brands.${brandId}.pendingOrders`;
+    const list = _.filter(state[key], (o) => o.id !== orderProductId);
+    return _.assign({}, state, { [key]: list });
+  }
   return state;
 }
 
@@ -41,5 +47,22 @@ export function loadBrandPendingOrders(brandId) {
     api: orderApi.loadBrandPendingOrders,
     params: { brandId },
     key: `brands.${brandId}.pendingOrders`,
+  });
+}
+
+export function removeBrandPendingOrder(brandId, orderProductId) {
+  return (dispatch) => {
+    dispatch({
+      type: 'REMOVE_BRAND_PENDING_ORDER',
+      payload: { brandId, orderProductId },
+    });
+  };
+}
+
+export function updateStock(orderProductId, count) {
+  return createFetchAction({
+    type: 'UPDATE_STOCK',
+    api: orderApi.updateStock,
+    params: { orderProductId, count },
   });
 }
