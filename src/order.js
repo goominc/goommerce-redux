@@ -6,26 +6,27 @@ import { orderApi } from 'goommerce-api-client';
 const _ = require('lodash');
 
 export default function order(state = {}, action) {
-  if (action.error) {
+  const { error, key, payload, type } = action;
+  if (error) {
     return state;
   }
-  if (action.type === 'BRAND_ORDER_STATS' ||
-      action.type === 'BRAND_ORDERS' ||
-      action.type === 'BRAND_PENDING_ORDERS') {
-    return _.assign({}, state, { [action.key]: action.payload });
+  if (type === 'ORDER_LIST') {
+    return _.assign({}, state, { [key]: payload });
   }
-  if (action.type === 'REMOVE_BRAND_PENDING_ORDER') {
-    const { brandId, orderProductId } = action.payload;
-    const key = `brands.${brandId}.pendingOrders`;
-    const list = _.filter(state[key], (o) => o.id !== orderProductId);
-    return _.assign({}, state, { [key]: list });
+  if (type === 'ORDER_UPDATE') {
+    const idx = state[key].findIndex((o) => o.id === payload.id);
+    if (idx !== -1) {
+      const list = state[key].slice(0);
+      list[idx] = payload;
+      return _.assign({}, state, { [key]: list });
+    }
   }
   return state;
 }
 
 export function loadBrandOrderStats(brandId) {
   return createFetchAction({
-    type: 'BRAND_ORDER_STATS',
+    type: 'ORDER_LIST',
     api: orderApi.loadBrandOrderStats,
     params: { brandId },
     key: `brands.${brandId}.orderStats`,
@@ -34,7 +35,7 @@ export function loadBrandOrderStats(brandId) {
 
 export function loadBrandOrders(brandId, date) {
   return createFetchAction({
-    type: 'BRAND_ORDERS',
+    type: 'ORDER_LIST',
     api: orderApi.loadBrandOrders,
     params: { brandId, start: date, end: date },
     key: `brands.${brandId}.orders.${date}`,
@@ -43,26 +44,18 @@ export function loadBrandOrders(brandId, date) {
 
 export function loadBrandPendingOrders(brandId) {
   return createFetchAction({
-    type: 'BRAND_PENDING_ORDERS',
+    type: 'ORDER_LIST',
     api: orderApi.loadBrandPendingOrders,
     params: { brandId },
     key: `brands.${brandId}.pendingOrders`,
   });
 }
 
-export function removeBrandPendingOrder(brandId, orderProductId) {
-  return (dispatch) => {
-    dispatch({
-      type: 'REMOVE_BRAND_PENDING_ORDER',
-      payload: { brandId, orderProductId },
-    });
-  };
-}
-
-export function updateStock(orderProductId, count) {
+export function updateStock(orderProductId, count, key) {
   return createFetchAction({
-    type: 'UPDATE_STOCK',
+    type: 'ORDER_UPDATE',
     api: orderApi.updateStock,
     params: { orderProductId, count },
+    key,
   });
 }
