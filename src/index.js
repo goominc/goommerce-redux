@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 
 import auth, * as authActions from './auth';
 import order, * as orderActions from './order';
+import error, * as errorActions from './error';
 
 const _ = require('lodash');
 
@@ -28,6 +29,7 @@ export default function configureStore(customReducers, initialState) {
   const rootReducer = combineReducers(_.defaults({}, customReducers, {
     auth,
     order,
+    error,
   }));
 
   const reducer = (state = {}, action) => {
