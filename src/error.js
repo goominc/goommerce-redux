@@ -8,7 +8,5 @@ export default function error(state = {}, action) {
 }
 
 export function resetError() {
-  (dispatch) => {
-    type: 'RESET_ERROR';
-  };
+  return (dispatch) => dispatch({ type: 'RESET_ERROR' });
 }
