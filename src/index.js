@@ -13,6 +13,7 @@ const _ = require('lodash');
 export {
   authActions,
   orderActions,
+  errorActions,
 };
 
 export default function configureStore(customReducers, initialState) {
