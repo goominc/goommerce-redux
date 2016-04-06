@@ -33,7 +33,19 @@ export default function product(state = {}, action) {
       return _.assign({}, state, { [key]: list });
     }
   }
+  if (type === 'PRODUCT_LOAD') {
+    return _.assign({}, state, { [key]: payload });
+  }
   return state;
+}
+
+export function loadProduct(productId) {
+  return createFetchAction({
+    type: 'PRODUCT_LOAD',
+    api: productApi.loadProduct,
+    params: { productId },
+    key: `${productId}`,
+  });
 }
 
 export function loadBrandProducts(brandId, offset, limit) {
