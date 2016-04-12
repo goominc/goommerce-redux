@@ -28,20 +28,13 @@ export default function order(state = {}, action) {
     return _.assign({}, state, { [key]: payload });
   }
   if (type === 'ORDER_UPDATE') {
-    const idx = state[key].findIndex((o) => o.id === payload.id);
+    const idx = state[key].list.findIndex((o) => o.id === payload.id);
+    console.log(key, idx);
     if (idx !== -1) {
-      const list = state[key].slice(0);
-      list[idx] = payload;
-      return _.assign({}, state, { [key]: list });
-    }
-  }
-  if (type === 'ORDER_PRODUCT_UPDATE') {
-    const { orderProducts } = state[key];
-    const idx = orderProducts.findIndex((o) => o.id === payload.id);
-    if (idx !== -1) {
-      const order = _.assign({}, state[key], { orderProducts: orderProducts.slice(0) });
-      order.orderProducts[idx] = payload;
-      return _.assign({}, state, { [key]: order });
+      const list = state[key].list.slice(0);
+      list[idx] = _.merge({}, list[idx], payload);
+      console.log(list[idx])
+      return _.assign({}, state, { [key]: _.assign({}, state[key], { list }) });
     }
   }
   return state;
@@ -74,11 +67,11 @@ export function loadBrandOrders(brandId, offset, limit) {
   });
 }
 
-export function updateStock(orderProductId, count, key) {
+export function updateBrandOrderStatus(brandId, orderId, from, to, key) {
   return createFetchAction({
-    type: 'ORDER_PRODUCT_UPDATE',
-    api: orderApi.updateStock,
-    params: { orderProductId, count },
+    type: 'ORDER_UPDATE',
+    api: orderApi.updateBrandOrderStatus,
+    params: { brandId, orderId, from, to },
     key,
   });
 }
