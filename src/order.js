@@ -67,11 +67,20 @@ export function loadBrandOrders(brandId, offset, limit) {
   });
 }
 
-export function updateBrandOrderStatus(brandId, orderId, from, to, key) {
+export function updateBrandOrderStatus(brandId, orderId, key, from, to) {
   return createFetchAction({
     type: 'ORDER_UPDATE',
     api: orderApi.updateBrandOrderStatus,
     params: { brandId, orderId, from, to },
+    key,
+  });
+}
+
+export function createOrderProductLog(orderProductId, key, params) {
+  return createFetchAction({
+    type: 'CREATE_ORDER_PRODUCT_LOG',
+    api: orderApi.createOrderProductLog,
+    params: { orderProductId, ...params },
     key,
   });
 }
