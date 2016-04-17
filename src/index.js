@@ -5,6 +5,7 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import auth, * as authActions from './auth';
+import brand, * as brandActions from './brand';
 import error, * as errorActions from './error';
 import order, * as orderActions from './order';
 import product, * as productActions from './product';
@@ -13,6 +14,7 @@ const _ = require('lodash');
 
 export {
   authActions,
+  brandActions,
   errorActions,
   orderActions,
   productActions,
@@ -31,6 +33,7 @@ export default function configureStore(customReducers, initialState) {
 
   const rootReducer = combineReducers(_.defaults({}, customReducers, {
     auth,
+    brand,
     error,
     order,
     product,
