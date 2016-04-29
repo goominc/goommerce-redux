@@ -29,11 +29,9 @@ export default function order(state = {}, action) {
   }
   if (type === 'ORDER_UPDATE') {
     const idx = state[key].list.findIndex((o) => o.id === payload.id);
-    console.log(key, idx);
     if (idx !== -1) {
       const list = state[key].list.slice(0);
       list[idx] = _.merge({}, list[idx], payload);
-      console.log(list[idx])
       return _.assign({}, state, { [key]: _.assign({}, state[key], { list }) });
     }
   }
@@ -83,4 +81,15 @@ export function createOrderProductLog(orderProductId, key, params) {
     params: { orderProductId, ...params },
     key,
   });
+}
+
+export function updateOrderProductStock(brandId, orderId, orderProductId, quantity) {
+  const update = loadBrandOrder(brandId, orderId);
+  return (dispatch, getState) => {
+    const state = getState();
+    return orderApi.updateOrderProductStock(state.auth, { orderProductId, quantity }).then(
+      () => update(dispatch, getState),
+      () => update(dispatch, getState),
+    );
+  };
 }
