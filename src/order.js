@@ -36,11 +36,11 @@ export default function order(state = {}, action) {
     }
   }
   if (type === 'ORDER_PRODUCT_UPDATE') {
-    const idx = state[key].orderProdcts.findIndex((o) => o.id === payload.id);
+    const idx = state[key].orderProducts.findIndex((o) => o.id === payload.id);
     if (idx !== -1) {
-      const orderProdcts = state[key].orderProdcts.slice(0);
-      orderProdcts[idx] = _.merge({}, orderProdcts[idx], payload);
-      return _.assign({}, state, { [key]: _.assign({}, state[key], { orderProdcts }) });
+      const orderProducts = state[key].orderProducts.slice(0);
+      orderProducts[idx] = _.merge({}, orderProducts[idx], payload);
+      return _.assign({}, state, { [key]: _.assign({}, state[key], { orderProducts }) });
     }
   }
   return state;
