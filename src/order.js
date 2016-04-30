@@ -35,6 +35,14 @@ export default function order(state = {}, action) {
       return _.assign({}, state, { [key]: _.assign({}, state[key], { list }) });
     }
   }
+  if (type === 'ORDER_PRODUCT_UPDATE') {
+    const idx = state[key].orderProdcts.findIndex((o) => o.id === payload.id);
+    if (idx !== -1) {
+      const orderProdcts = state[key].orderProdcts.slice(0);
+      orderProdcts[idx] = _.merge({}, orderProdcts[idx], payload);
+      return _.assign({}, state, { [key]: _.assign({}, state[key], { orderProdcts }) });
+    }
+  }
   return state;
 }
 
@@ -83,13 +91,11 @@ export function createOrderProductLog(orderProductId, key, params) {
   });
 }
 
-export function updateOrderProductStock(brandId, orderId, orderProductId, quantity) {
-  const update = loadBrandOrder(brandId, orderId);
-  return (dispatch, getState) => {
-    const state = getState();
-    return orderApi.updateOrderProductStock(state.auth, { orderProductId, quantity }).then(
-      () => update(dispatch, getState),
-      () => update(dispatch, getState),
-    );
-  };
+export function updateOrderProductStock(orderProductId, key, quantity) {
+  return createFetchAction({
+    type: 'ORDER_PRODUCT_UPDATE',
+    api: orderApi.updateOrderProductStock,
+    params: { orderProductId, quantity },
+    key,
+  });
 }
