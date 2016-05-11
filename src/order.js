@@ -28,7 +28,7 @@ export default function order(state = {}, action) {
     return _.assign({}, state, { [key]: payload });
   }
   if (type === 'ORDER_UPDATE') {
-    if (_.isArray(state[key])) {
+    if (_.isArray(state[key].list)) {
       const idx = state[key].list.findIndex((o) => o.id === payload.id);
       if (idx !== -1) {
         const list = state[key].list.slice(0);
