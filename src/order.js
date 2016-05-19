@@ -85,6 +85,15 @@ export function updateBrandOrderStatus(brandId, orderId, key, from, to) {
   });
 }
 
+export function brandOrderReadyToPickUp(brandId, orderId, key, orderProducts) {
+  return createFetchAction({
+    type: 'ORDER_UPDATE',
+    api: orderApi.brandOrderReadyToPickUp,
+    params: { brandId, orderId, orderProducts },
+    key,
+  });
+}
+
 export function createOrderProductLog(orderProductId, key, params) {
   return createFetchAction({
     type: 'CREATE_ORDER_PRODUCT_LOG',
@@ -99,6 +108,15 @@ export function updateOrderProductStock(orderProductId, key, quantity, reason) {
     type: 'ORDER_PRODUCT_UPDATE',
     api: orderApi.updateOrderProductStock,
     params: { orderProductId, quantity, reason },
+    key,
+  });
+}
+
+export function deleteOrderProductStock(orderProductId, key) {
+  return createFetchAction({
+    type: 'ORDER_PRODUCT_UPDATE',
+    api: orderApi.deleteOrderProductStock,
+    params: { orderProductId },
     key,
   });
 }
