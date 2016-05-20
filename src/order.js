@@ -103,11 +103,11 @@ export function createOrderProductLog(orderProductId, key, params) {
   });
 }
 
-export function updateOrderProductStock(orderProductId, key, quantity, reason) {
+export function updateOrderProductStock(orderProductId, key, quantity, reason, data) {
   return createFetchAction({
     type: 'ORDER_PRODUCT_UPDATE',
     api: orderApi.updateOrderProductStock,
-    params: { orderProductId, quantity, reason },
+    params: { orderProductId, quantity, reason, data },
     key,
   });
 }
