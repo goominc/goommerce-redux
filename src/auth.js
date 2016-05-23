@@ -10,7 +10,7 @@ export default function auth(state = {}, action) {
   if (action.type === 'LOGOUT') {
     return {};
   }
-  if (['LOGIN', 'WHOAMI', 'SIGNUP', 'RESET_PASSWORD'].indexOf(action.type) !== -1) {
+  if (['LOGIN', 'WHOAMI', 'SIGNUP', 'RESET_PASSWORD', 'UPDATE_AGREEMENTS'].indexOf(action.type) !== -1) {
     return _.merge({}, state, action.payload);
   }
   return state;
@@ -64,5 +64,13 @@ export function resetPassword(params) {
     type: 'RESET_PASSWORD',
     api: authApi.resetPassword,
     params,
+  });
+}
+
+export function updateAgreements({ buyer, seller, personalInfomation }) {
+  return createFetchAction({
+    type: 'UPDATE_AGREEMENTS',
+    api: authApi.updateAgreements,
+    params: { buyer, seller, personalInfomation },
   });
 }
