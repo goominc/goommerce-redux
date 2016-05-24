@@ -2,8 +2,7 @@
 
 import { createFetchAction } from './util';
 import { orderApi } from 'goommerce-api-client';
-
-const _ = require('lodash');
+import _ from 'lodash';
 
 export default function order(state = {}, action) {
   const { error, key, payload, type } = action;
@@ -47,15 +46,6 @@ export default function order(state = {}, action) {
     }
   }
   return state;
-}
-
-export function loadBrandOrderStats(brandId) {
-  return createFetchAction({
-    type: 'ORDER_LIST',
-    api: orderApi.loadBrandOrderStats,
-    params: { brandId },
-    key: `brands.${brandId}.orderStats`,
-  });
 }
 
 export function loadBrandOrder(brandId, orderId) {

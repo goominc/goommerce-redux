@@ -2,8 +2,7 @@
 
 import { createFetchAction } from './util';
 import { productApi } from 'goommerce-api-client';
-
-const _ = require('lodash');
+import _ from 'lodash';
 
 // TODO: create a separate reducer for LIST, PAGINATION, UPDATE action.
 export default function product(state = {}, action) {

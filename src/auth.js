@@ -2,6 +2,7 @@
 
 import { createFetchAction } from './util';
 import { authApi } from 'goommerce-api-client';
+import _ from 'lodash';
 
 export default function auth(state = {}, action) {
   if (action.error) {
