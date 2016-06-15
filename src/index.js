@@ -9,6 +9,7 @@ import brand, * as brandActions from './brand';
 import error, * as errorActions from './error';
 import order, * as orderActions from './order';
 import product, * as productActions from './product';
+import uncle, * as uncleActions from './uncle';
 
 const _ = require('lodash');
 
@@ -18,6 +19,7 @@ export {
   errorActions,
   orderActions,
   productActions,
+  uncleActions,
 };
 
 export default function configureStore(customReducers, initialState) {
@@ -37,6 +39,7 @@ export default function configureStore(customReducers, initialState) {
     error,
     order,
     product,
+    uncle,
   }));
 
   const reducer = (state = {}, action) => {
