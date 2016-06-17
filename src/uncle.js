@@ -23,3 +23,19 @@ export function loadUncleOrders(date) {
     key: `${date}`,
   });
 }
+
+export function unclePickUp(brandId, orderId, orderProducts) {
+  return createFetchAction({
+    type: 'UNCLE_PICK_UP',
+    api: uncleApi.unclePickUp,
+    params: { brandId, orderId, orderProducts },
+  });
+}
+
+export function uncleCancelPickUp(brandId, orderId, orderProducts) {
+  return createFetchAction({
+    type: 'UNCLE_CANCEL_PICK_UP',
+    api: uncleApi.uncleCancelPickUp,
+    params: { brandId, orderId, orderProducts },
+  });
+}
