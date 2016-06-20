@@ -26,25 +26,6 @@ export default function order(state = {}, action) {
   if (type === 'ORDER_LOAD') {
     return _.assign({}, state, { [key]: payload });
   }
-  if (type === 'ORDER_UPDATE') {
-    if (_.isArray(state[key].list)) {
-      const idx = state[key].list.findIndex((o) => o.id === payload.id);
-      if (idx !== -1) {
-        const list = state[key].list.slice(0);
-        list[idx] = _.merge({}, list[idx], payload);
-        return _.assign({}, state, { [key]: _.assign({}, state[key], { list }) });
-      }
-    }
-    return _.assign({}, state, { [key]: _.merge({}, state[key], payload) });
-  }
-  if (type === 'ORDER_PRODUCT_UPDATE') {
-    const idx = state[key].orderProducts.findIndex((o) => o.id === payload.id);
-    if (idx !== -1) {
-      const orderProducts = state[key].orderProducts.slice(0);
-      orderProducts[idx] = _.merge({}, orderProducts[idx], payload);
-      return _.assign({}, state, { [key]: _.assign({}, state[key], { orderProducts }) });
-    }
-  }
   return state;
 }
 
