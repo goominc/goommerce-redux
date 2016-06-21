@@ -26,7 +26,7 @@ export default function order(state = {}, action) {
   if (type === 'ORDER_LOAD') {
     return _.assign({}, state, { [key]: payload });
   }
-  if (type === 'ORDER_UPDATE') {
+  if (type === 'ORDER_UPDATE' && key) {
     if (_.isArray(state[key].list)) {
       const idx = state[key].list.findIndex((o) => o.id === payload.id);
       if (idx !== -1) {
@@ -37,7 +37,7 @@ export default function order(state = {}, action) {
     }
     return _.assign({}, state, { [key]: _.merge({}, state[key], payload) });
   }
-  if (type === 'ORDER_PRODUCT_UPDATE') {
+  if (type === 'ORDER_PRODUCT_UPDATE' && key) {
     const idx = state[key].orderProducts.findIndex((o) => o.id === payload.id);
     if (idx !== -1) {
       const orderProducts = state[key].orderProducts.slice(0);
@@ -66,12 +66,11 @@ export function loadBrandOrders(brandId, status, offset, limit) {
   });
 }
 
-export function updateBrandOrderStatus(brandId, orderId, key, from, to) {
+export function updateBrandOrderStatus(brandId, orderId, from, to) {
   return createFetchAction({
     type: 'ORDER_UPDATE',
     api: orderApi.updateBrandOrderStatus,
     params: { brandId, orderId, from, to },
-    key,
   });
 }
 
