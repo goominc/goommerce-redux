@@ -57,11 +57,11 @@ export function loadBrandOrder(brandId, orderId) {
   });
 }
 
-export function loadBrandOrders(brandId, status, offset, limit) {
+export function loadBrandOrders(brandId, status, { start, end, offset, limit } = {}) {
   return createFetchAction({
     type: 'ORDER_PAGINATION',
     api: orderApi.loadBrandOrders,
-    params: { brandId, status, offset, limit },
+    params: { brandId, status, start, end, offset, limit },
     key: `brands.${brandId}.orders.${status}`,
   });
 }
