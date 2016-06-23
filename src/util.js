@@ -17,6 +17,7 @@ export function createFetchAction(options) {
         key,
         error,
       });
+      return Promise.reject(error);
     });
   };
   action.key = key;
